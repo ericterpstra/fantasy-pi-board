@@ -94,8 +94,7 @@ app.post('/league', function(req, res) {
                 res.status(404).send(err.description);
             } else {
                 let matchups = data.scoreboard.matchups;
-                allTeamMatchups = extractTeamsFromMatchups(matchups);
-                res.json(allteams);
+                res.json(extractTeamsFromMatchups(matchups));
             }
         }
     );
