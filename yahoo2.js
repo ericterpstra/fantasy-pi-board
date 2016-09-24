@@ -80,7 +80,6 @@ app.post('/league', function(req, res) {
         '359.l.' + req.body.leagueId,
         function(err, data) {
             if (err) {
-                console.log(err);
                 res.status(404).send(err.description);
             } else {
                 let matchups = data.scoreboard.matchups;
@@ -131,8 +130,8 @@ app.post('/league', function(req, res) {
     );
 });
 
-app.post('/matchup', function(req, res) {
-    console.log("New matchup ID: " + req.body.matchupId);
+app.post('/team', function(req, res) {
+    console.log("New team ID: " + req.body.teamId);
     res.json(req.body);
 });
 
