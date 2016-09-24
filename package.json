@@ -16,15 +16,14 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "jade": "^1.11.0",
+    "lodash": "^4.16.1",
     "passport": "^0.3.2",
     "passport-yahoo-oauth2": "^0.2.6",
     "yahoo-fantasy-without-auth": "^1.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "postinstall": "bower install",
-
     "prestart": "npm install",
     "start": "node yahoo2.js"
   }

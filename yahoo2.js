@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 var path = require('path');
+var _ = require('lodash');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -82,7 +83,49 @@ app.post('/league', function(req, res) {
                 console.log(err);
                 res.status(404).send(err.description);
             } else {
-                res.json(data.scoreboard.matchups);
+                let matchups = data.scoreboard.matchups;
+
+                let allteams = matchups.map( (matchup) => {
+                    return [
+                        {
+                            home: {
+                                name: matchup.teams[0].name,
+                                manager: matchup.teams[0].managers,
+                                score: matchup.teams[0].points.total,
+                                id: matchup.teams[0].team_id
+
+                            },
+                            away: {
+                                name: matchup.teams[1].name,
+                                manager: matchup.teams[1].managers,
+                                score: matchup.teams[1].points.total,
+                                id: matchup.teams[1].team_id
+                            }
+                        },
+                        {
+                            home: {
+                                name: matchup.teams[1].name,
+                                manager: matchup.teams[1].managers,
+                                score: matchup.teams[1].points.total,
+                                id: matchup.teams[1].team_id
+
+                            },
+                            away: {
+                                name: matchup.teams[0].name,
+                                manager: matchup.teams[0].managers,
+                                score: matchup.teams[0].points.total,
+                                id: matchup.teams[0].team_id
+                            }
+                        }
+                    ]
+                });
+
+
+                allteams = _.flatten(allteams);
+
+
+
+                res.json(allteams);
             }
         }
     );
