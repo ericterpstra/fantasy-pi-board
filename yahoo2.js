@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 
 var path = require('path');
 var _ = require('lodash');
