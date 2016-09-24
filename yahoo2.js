@@ -12,7 +12,7 @@ var YahooStrategy = require('passport-yahoo-oauth2').Strategy;
 
 var yf = new YantasySports();
 var intervalId;
-var selectedLeagueId;
+var selectedLeagueKey;
 var selectedTeamId = 0;
 var allMatchups = [];
 
@@ -93,18 +93,18 @@ app.post('/league', function(req, res) {
     console.log("New league Key: " + req.body.leagueKey);
     selectedLeagueKey = req.body.leagueKey;
 
-    yf.league.scoreboard(
-        selectedLeagueKey,
 
-        function(err, data) {
-            if (err) {
-                res.status(404).send(err.description);
-            } else {
-                let matchups = data.scoreboard.matchups;
-                res.json(extractTeamsFromMatchups(matchups));
-            }
-        }
-    );
+    // Otherwise try to return the latest grab from the yahoo api
+    if (intervalId && allMatchups.length) {
+        return res.json(allMatchups);
+    } else  {
+        //  If the loop hasn't started yet, start the loop
+        startLoop(function() {
+            res.json(allMatchups);
+        });
+    }
+
+
 });
 
 app.post('/team', function(req, res) {
@@ -123,6 +123,29 @@ app.listen(app.get('port'), function() {
 
     // Start Johnny Five
 });
+
+function startLoop(callback) {
+    fetchScoreboard(callback);
+
+    if (intervalId) clearInterval(intervalId);
+
+    intervalId = setInterval(fetchScoreboard, (30 * 60 * 1000));
+}
+
+function fetchScoreboard(callback) {
+    console.log('Fetching scoreboard for ', selectedLeagueKey);
+    yf.league.scoreboard(
+        selectedLeagueKey,
+        function(err, data) {
+            if (err) {
+                res.status(404).send(err.description);
+            } else {
+                extractTeamsFromMatchups(matchups);
+                if (callback) callback();
+            }
+        }
+    );
+}
 
 function extractTeamsFromMatchups(matchups) {
 
