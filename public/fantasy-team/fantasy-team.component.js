@@ -14,9 +14,9 @@ angular.module('fantasyTeam').component('fantasyTeam', {
 
         self.matchups = Api.matchups;
 
-        self.changeMatchup = function (id) {
+        self.selectTeam = function (id) {
             console.log("Changing team: " + id);
-            Api.selectMatchup(id);
+            Api.selectTeam(id);
         }
     }]
 });

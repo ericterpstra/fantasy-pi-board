@@ -16,6 +16,7 @@ function($http) {
                     return response;
                 })
                 .catch(function (response) {
+                    console.log(response);
                     Api.error = angular.copy(response.data);
                     return response;
                 });

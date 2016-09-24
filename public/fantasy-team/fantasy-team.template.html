@@ -1,5 +1,5 @@
 <div class="list-group">
-  <a class="list-group-item clearfix" ng-repeat="matchup in $ctrl.matchups" ng-click="$ctrl.changeMatchup(matchup.home.id)">
+  <a class="list-group-item clearfix" ng-repeat="matchup in $ctrl.matchups" ng-class="{'active': matchup.home.selected }"  ng-click="$ctrl.selectTeam(matchup.home.id)">
     <span class="pull-left">
       <h4 class="list-group-item-heading">{{ matchup.home.name }} ({{ matchup.home.manager[0].nickname }})</h4>
       <p class="list-group-item-text">VS {{ matchup.away.name }} ({{ matchup.away.manager[0].nickname }})</p>
