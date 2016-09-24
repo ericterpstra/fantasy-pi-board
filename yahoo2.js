@@ -16,6 +16,10 @@ var intervalId;
 var selectedLeagueKey;
 var selectedTeamId = 0;
 var allMatchups = [];
+var lcd1 = 'Welcome!';
+var lcd2 = address();
+var diff = 0;
+var angle = 90;
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -131,6 +135,14 @@ app.post('/team', function(req, res) {
     res.json(req.body);
 });
 
+app.get('/board', function(req, res) {
+    res.json({
+        lcd1,
+        lcd2,
+        angle
+    });
+});
+
 // route to handle all other requests (serves angular frontend index)
 app.get('*', function(req, res) {
     res.sendFile('./public/index.html');
@@ -143,10 +155,6 @@ app.listen(app.get('port'), function() {
 });
 
 function setScoreboard() {
-    var lcd1 = 'Welcome!';
-    var lcd2 = address();
-    var diff = 0;
-    var angle = 90;
 
     if (selectedTeamId && allMatchups.length) {
         let theMatchup = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
