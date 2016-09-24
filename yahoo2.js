@@ -74,6 +74,17 @@ app.get('/auth/yahoo/callback',
     }
 );
 
+app.get('/leagues', function(req, res) {
+    yf.user.leagues('nfl', function(err, data){
+        if (err) {
+            console.log(err);
+            return res.status(500).send(err.description);
+        }
+
+        return data.leagues.leagues;
+    });
+});
+
 app.post('/league', function(req, res) {
     console.log("New league ID: " + req.body.leagueId);
     yf.league.scoreboard(
@@ -123,15 +134,13 @@ app.post('/league', function(req, res) {
 
                 allteams = _.flatten(allteams);
 
-
-
                 res.json(allteams);
             }
         }
     );
 });
 
-app.post('/matchup', function(req, res) {
+app.post('/team/:teamid', function(req, res) {
     console.log("New matchup ID: " + req.body.matchupId);
     res.json(req.body);
 });
