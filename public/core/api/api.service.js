@@ -13,7 +13,6 @@ function($http) {
                 .then(function (response) {
                     console.log(response);
                     Api.matchups = angular.copy(response.data);
-                    console.log(Api.matchups);
                     return response;
                 })
                 .catch(function (response) {
@@ -22,8 +21,8 @@ function($http) {
                 });
         },
 
-        selectMatchup: function(id) {
-            return $http.post('/matchup', { matchupId: id })
+        selectTeam: function(id) {
+            return $http.post('/team', { teamId: id })
                 .then(function (response) {
                     return response;
                 });

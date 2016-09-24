@@ -6,5 +6,5 @@ angular.module('fantasyApp', [
   'fantasyHeader',
   'fantasyIndex',
   'fantasyLeague',
-  'fantasyMatchups'
+  'fantasyTeam'
 ]);

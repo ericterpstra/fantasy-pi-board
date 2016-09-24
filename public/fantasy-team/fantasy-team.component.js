@@ -1,21 +1,21 @@
 'use strict';
 
-angular.module('fantasyMatchups').component('fantasyMatchups', {
-    templateUrl: 'fantasy-matchups/fantasy-matchups.template.html',
+angular.module('fantasyTeam').component('fantasyTeam', {
+    templateUrl: 'fantasy-team/fantasy-team.template.html',
     controller: ['$scope', 'Api',
-    function FantasyTeamController($scope, Api) {
+    function FantasyMatchupsController($scope, Api) {
         var self = this;
 
         $scope.$watch(function () {
             return Api.matchups;
         }, function (newValue, oldValue) {
             self.matchups = angular.copy(newValue);
-            console.log("New matchups: " + JSON.stringify(self.matchups));
         });
 
         self.matchups = Api.matchups;
 
         self.changeMatchup = function (id) {
+            console.log("Changing team: " + id);
             Api.selectMatchup(id);
         }
     }]
