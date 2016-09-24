@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" ng-app="fantasyApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Fantasy Football Setup</title>
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="app.css" />
+
+    <script src="vendor/jquery/dist/jquery.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-route/angular-route.js"></script>
+
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="core/core.module.js"></script>
+    <script src="core/api/api.module.js"></script>
+    <script src="core/api/api.service.js"></script>
+    <script src="fantasy-header/fantasy-header.module.js"></script>
+    <script src="fantasy-header/fantasy-header.component.js"></script>
+    <script src="fantasy-index/fantasy-index.module.js"></script>
+    <script src="fantasy-index/fantasy-index.component.js"></script>
+    <script src="fantasy-league/fantasy-league.module.js"></script>
+    <script src="fantasy-league/fantasy-league.component.js"></script>
+    <script src="fantasy-matchups/fantasy-matchups.module.js"></script>
+    <script src="fantasy-matchups/fantasy-matchups.component.js"></script>
+  </head>
+  <body>
+
+    <fantasy-header></fantasy-header>
+    <div class="view-container">
+      <div ng-view class="view-frame"></div>
+    </div>
+
+  </body>
+</html>

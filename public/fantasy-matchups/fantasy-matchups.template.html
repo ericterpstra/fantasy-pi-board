@@ -1,0 +1,8 @@
+<div ng-repeat="matchup in $ctrl.matchups">
+  <div class="list-group">
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ matchup.teams[0].name }} VS {{ matchup.teams[1].name }}</h4>
+        <p class="list-group-item-text">{{ matchup.teams[0].managers[0].nickname }} VS {{ matchup.teams[1].managers[0].nickname }}</p>
+      </a>
+    </div>
+</div>

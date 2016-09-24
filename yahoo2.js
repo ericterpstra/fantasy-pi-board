@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var path = require('path');
 var express = require('express');
 var session = require('express-session');
@@ -47,8 +49,6 @@ passport.use(new YahooStrategy({
 ));
 
 var app = express();
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 app.set('port', 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -61,7 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/',
+app.get('/login',
     passport.authenticate('yahoo')
 );
 
@@ -69,10 +69,34 @@ app.get('/auth/yahoo/callback',
     passport.authenticate('yahoo', { failureRedirect: '/' }),
     function(req, res) {
         // Successful authentication, redirect home.
-        console.log('Hi!');
-        res.end("Hi!");
+        res.redirect('/');
     }
 );
+
+app.post('/league', function(req, res) {
+    console.log("New league ID: " + req.body.leagueId);
+    yf.league.scoreboard(
+        '359.l.' + req.body.leagueId,
+        function(err, data) {
+            if (err) {
+                console.log(err);
+                res.status(404).send(err.description);
+            } else {
+                res.json(data.scoreboard.matchups);
+            }
+        }
+    );
+});
+
+app.post('/matchup', function(req, res) {
+    console.log("New matchup ID: " + req.body.matchupId);
+    res.json(req.body);
+});
+
+// route to handle all other requests (serves angular frontend index)
+app.get('*', function(req, res) {
+    res.sendfile('./public/index.html');
+});
 
 app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));

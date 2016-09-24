@@ -1,0 +1,12 @@
+{
+  "name": "fantasy-board",
+  "version": "1.0.0",
+  "description": "Fantasy Football Scoreboard for Raspberry Pi",
+  "homepage": "https://github.com/ericterpstra/fantasy-pi-board",
+  "dependencies": {
+    "angular": "1.5.x",
+    "angular-route": "1.5.x",
+    "bootstrap": "3.3.x",
+    "jquery": "2.2.x"
+  }
+}

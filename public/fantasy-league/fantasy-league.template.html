@@ -1,0 +1,12 @@
+<div class="input-group">
+  <input type="text" class="form-control" ng-model="$ctrl.league" placeholder="League ID">
+  <span class="input-group-btn">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.setLeague($ctrl.league)">Set</button>
+  </span>
+</div>
+<br />
+<div class="row">
+  <div class="col-sm-12">
+    <p class="text-danger" ng-show="$ctrl.error !== ''">{{ $ctrl.error }}</p>
+  </div>
+</div>
