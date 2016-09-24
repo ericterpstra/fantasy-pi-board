@@ -15,8 +15,17 @@ angular.module('fantasyTeam').component('fantasyTeam', {
         self.matchups = Api.matchups;
 
         self.selectTeam = function (id) {
-            console.log("Changing team: " + id);
             Api.selectTeam(id);
+
+            for (var i = 0; i < self.matchups.length; i++) {
+                if (self.matchups[i].home.selected && (self.matchups[i].home.id !== id)) {
+                    self.matchups[i].home.selected = false;
+                }
+
+                if (self.matchups[i].home.id === id) {
+                    self.matchups[i].home.selected = true;
+                }
+            }
         }
     }]
 });

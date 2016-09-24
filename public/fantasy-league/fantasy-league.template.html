@@ -1,12 +1,16 @@
-<div class="input-group">
-  <input type="text" class="form-control" ng-model="$ctrl.league" placeholder="League ID">
-  <span class="input-group-btn">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.setLeague($ctrl.league)">Set</button>
-  </span>
-</div>
+<form class="form-horizontal" ng-hide="!$ctrl.leagues.length">
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="leagueSelect">Select League</label>
+    <div class="col-sm-10">
+      <select id="leagueSelect" class="form-control" ng-model="$ctrl.league" ng-options="league.league_key as league.name for league in $ctrl.leagues" ng-change="$ctrl.setLeague($ctrl.league)">
+      </select>
+    </div>
+  </div>
+</form>
 <br />
 <div class="row">
   <div class="col-sm-12">
     <p class="text-danger" ng-show="$ctrl.error !== ''">{{ $ctrl.error }}</p>
+    <p class="text-danger" ng-show="!$ctrl.leagues.length">There are currently no leagues. Are you logged in?</p>
   </div>
 </div>
