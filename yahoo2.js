@@ -156,12 +156,12 @@ function extractTeamsFromMatchups(matchups) {
         ]
     });
 
+    allMatchups = _.flatten(allteams);
+
     if( selectedTeamId ) {
-        let selectedTeamObj = _.find(allteams, (matchup) =>  home.id === selectedTeamId );
+        let selectedTeamObj = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
         selectedTeamObj.home.selected = true;
     }
-
-    allMatchups = _.flatten(allteams);
 
     return allMatchups;
 }
