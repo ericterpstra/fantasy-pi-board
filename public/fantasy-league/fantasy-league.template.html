@@ -1,7 +1,7 @@
 <form class="form-horizontal" ng-hide="!$ctrl.leagues.length">
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="leagueSelect">Select League</label>
-    <div class="col-sm-10">
+    <label class="col-sm-4 control-label" for="leagueSelect">Select League</label>
+    <div class="col-sm-8">
       <select id="leagueSelect" class="form-control" ng-model="$ctrl.league" ng-options="league.league_key as league.name for league in $ctrl.leagues" ng-change="$ctrl.setLeague($ctrl.league)">
       </select>
     </div>
