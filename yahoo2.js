@@ -11,6 +11,10 @@ var passport = require('passport');
 var YahooStrategy = require('passport-yahoo-oauth2').Strategy;
 
 var yf = new YantasySports();
+var intervalId;
+var selectedLeagueId;
+var selectedTeamId = 0;
+var allMatchups = [];
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -75,7 +79,7 @@ app.get('/auth/yahoo/callback',
 );
 
 app.get('/leagues', function(req, res) {
-    yf.user.leagues('nfl', function(err, data){
+    yf.user.game_leagues('nfl', function(err, data){
         if (err) {
             console.log(err);
             return res.status(500).send(err.description);
@@ -86,9 +90,12 @@ app.get('/leagues', function(req, res) {
 });
 
 app.post('/league', function(req, res) {
-    console.log("New league ID: " + req.body.leagueId);
+    console.log("New league Key: " + req.body.leagueKey);
+    selectedLeagueKey = req.body.leagueKey;
+
     yf.league.scoreboard(
-        '359.l.' + req.body.leagueId,
+        selectedLeagueKey,
+
         function(err, data) {
             if (err) {
                 res.status(404).send(err.description);
@@ -113,11 +120,9 @@ app.get('*', function(req, res) {
 
 app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
+
+    // Start Johnny Five
 });
-
-
-var selectedTeamId = 0;
-var allMatchups = [];
 
 function extractTeamsFromMatchups(matchups) {
 
