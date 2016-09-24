@@ -35,6 +35,23 @@ passport.use(new YahooStrategy({
         // });
         var data = profile._json;
 
+        setInterval(function () {
+            console.log("Requesting token.");
+            request.post('https://api.login.yahoo.com/oauth/v1/get_token', {
+                oauth: {
+                    consumer_key: process.env.YAHOO_CONSUMER_KEY,
+                    consumer_secret: process.env.YAHOO_CONSUMER_SECRET,
+                    token: token,
+                    token_secret: tokenSecret,
+                    session_handle: profile.oauth_session_handle
+                }
+            }, function (err, res, body) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }, 1000 * 60);
+
         var userObj = {
             id: profile.id,
             name: data.profile.nickname,
