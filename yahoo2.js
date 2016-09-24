@@ -157,15 +157,15 @@ app.listen(app.get('port'), function() {
 function setScoreboard() {
 
     if (selectedTeamId && allMatchups.length) {
-        let theMatchup = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
+        var theMatchup = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
 
         // Get team names
-        let homeName = theMatchup.home.name;
-        let awayName = theMatchup.away.name;
+        var homeName = theMatchup.home.name;
+        var awayName = theMatchup.away.name;
 
         // Get scores
-        let homeScore = theMatchup.home.score;
-        let awayScore = theMatchup.away.score;
+        var homeScore = theMatchup.home.score;
+        var awayScore = theMatchup.away.score;
 
         lcd1 = homeName.substr(0, (16 - homeScore.length + 1)) + ' ' + homeScore;
         lcd2 = awayName.substr(0, (16 - awayScore.length + 1)) + ' ' + awayScore;
@@ -212,7 +212,7 @@ function fetchScoreboard(callback) {
 
 function extractTeamsFromMatchups(matchups) {
 
-    let allteams = matchups.map( (matchup) => {
+    var allteams = matchups.map( (matchup) => {
         return [
             {
                 home: {
@@ -250,7 +250,7 @@ function extractTeamsFromMatchups(matchups) {
     allMatchups = _.flatten(allteams);
 
     if( selectedTeamId ) {
-        let selectedTeamObj = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
+        var selectedTeamObj = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
         selectedTeamObj.home.selected = true;
     }
 

@@ -21,6 +21,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --use_strict yahoo2.js"
+    "start": "node yahoo2.js"
   }
 }
