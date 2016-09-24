@@ -81,7 +81,6 @@ app.get('/auth/yahoo/callback',
 app.get('/leagues', function(req, res) {
     yf.user.game_leagues('nfl', function(err, data){
         if (err) {
-            console.log(err);
             res.status(500).send(err.description);
         } else {
             res.json(data.leagues);

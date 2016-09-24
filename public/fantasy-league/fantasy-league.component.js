@@ -7,6 +7,15 @@ angular.module('fantasyLeague').component('fantasyLeague', {
         var self = this;
 
         self.error = '';
+        self.leagues = [];
+
+        Api.getLeagues();
+
+        $scope.$watch(function () {
+            return Api.leagues;
+        }, function (newValue, oldValue) {
+            self.leagues = angular.copy(newValue);
+        });
 
         $scope.$watch(function () {
             return Api.error;
