@@ -2,6 +2,7 @@ require('dotenv').config();
 
 var path = require('path');
 var _ = require('lodash');
+var address = require('network-address');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -109,6 +110,7 @@ app.post('/league', function(req, res) {
 app.post('/team', function(req, res) {
     console.log("New team ID: " + req.body.teamId);
     selectedTeamId = req.body.teamId;
+    setScoreboard();
     res.json(req.body);
 });
 
@@ -123,12 +125,47 @@ app.listen(app.get('port'), function() {
     // Start Johnny Five
 });
 
+function setScoreboard() {
+    var lcd1 = 'Welcome!';
+    var lcd2 = address();
+    var diff = 0;
+    var angle = 90;
+
+    if (selectedTeamId && allMatchups.length) {
+        let theMatchup = _.find(allMatchups, (matchup) =>  matchup.home.id === selectedTeamId );
+
+        // Get team names
+        let homeName = theMatchup.home.name;
+        let awayName = theMatchup.away.name;
+
+        // Get scores
+        let homeScore = theMatchup.home.score;
+        let awayScore = theMatchup.away.score;
+
+        lcd1 = homeName.substr(0, (16 - homeScore.length + 1)) + ' ' + homeScore;
+        lcd2 = awayName.substr(0, (16 - awayScore.length + 1)) + ' ' + awayScore;
+
+        // Get score difference
+        diff = +homeScore - +awayScore;
+
+        // Get servo angle
+        // 30 + ( (120) / ((1 + e^(-1 *0.17*x)) )
+        angle = 30 + ( 120 / ( 1 + Math.pow(Math.E,( -1 * 0.17 * diff)) ) );
+    }
+
+    console.log('LCD1: ', lcd1);
+    console.log('LCD2: ', lcd2);
+
+    console.log('diff: ', diff);
+    console.log('angle: ', angle);
+}
+
 function startLoop(callback) {
     fetchScoreboard(callback);
 
     if (intervalId) clearInterval(intervalId);
 
-    intervalId = setInterval(fetchScoreboard, (30 * 60 * 1000));
+    intervalId = setInterval(fetchScoreboard, (5 * 1000));
 }
 
 function fetchScoreboard(callback) {
@@ -137,9 +174,11 @@ function fetchScoreboard(callback) {
         selectedLeagueKey,
         function(err, data) {
             if (err) {
-                res.status(404).send(err.description);
+                console.log(err);
+                throw Error(err.description);
             } else {
-                extractTeamsFromMatchups(matchups);
+                extractTeamsFromMatchups(data.scoreboard.matchups);
+                setScoreboard();
                 if (callback) callback();
             }
         }
