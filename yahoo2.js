@@ -1,7 +1,3 @@
-var YAHOO_CONSUMER_KEY = "dj0yJmk9YkNFalE2QlFrb3J3JmQ9WVdrOVNGSjZNRmx5TlRJbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1hYg--";
-var YAHOO_CONSUMER_SECRET = "ed4bc8eb6399732f3f75fb3bca0d00f2ab4b1c2c";
-
-
 var path = require('path');
 var express = require('express');
 var session = require('express-session');
@@ -22,8 +18,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new YahooStrategy({
-        consumerKey: YAHOO_CONSUMER_KEY,
-        consumerSecret: YAHOO_CONSUMER_SECRET,
+        consumerKey: process.env.YAHOO_CONSUMER_KEY,
+        consumerSecret: process.env.YAHOO_CONSUMER_SECRET,
         callbackURL: "http://127.0.0.1:3000/auth/yahoo/callback"
     },
     function(token, tokenSecret, profile, done) {
