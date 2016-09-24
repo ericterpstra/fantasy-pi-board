@@ -109,7 +109,7 @@ app.post('/team', function(req, res) {
 
 // route to handle all other requests (serves angular frontend index)
 app.get('*', function(req, res) {
-    res.sendfile('./public/index.html');
+    res.sendFile('./public/index.html');
 });
 
 app.listen(app.get('port'), function() {
